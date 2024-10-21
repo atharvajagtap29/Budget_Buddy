@@ -1,5 +1,7 @@
 import { useUser } from "@clerk/clerk-react";
 import React, { useState } from "react";
+// Import context
+import { useFinancialRecords } from "../../context/records-context";
 
 const FinancialRecordForm = () => {
   const [description, setDescription] = useState<string>("");
@@ -7,13 +9,14 @@ const FinancialRecordForm = () => {
   const [category, setCategory] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const { user } = useUser();
+  const { addRecord } = useFinancialRecords();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Record to add to the DB
     const newRecord = {
-      userId: user?.id,
+      userId: user?.id ?? "",
       date: new Date(),
       description: description,
       amount: parseFloat(amount),
@@ -22,7 +25,7 @@ const FinancialRecordForm = () => {
     };
 
     // pass the record to this function which will add it to the database
-    // addRecord(newRecord)
+    addRecord(newRecord)
   };
 
   return (
