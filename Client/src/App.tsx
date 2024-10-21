@@ -1,24 +1,41 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Auth from "./pages/auth";
 import Dashboard from "./pages/dashboard";
 import { FinancialRecordsProvider } from "./context/records-context";
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  RedirectToSignIn,
+} from "@clerk/clerk-react";
 
 function App() {
   return (
-    <>
-      <Router>
+    <Router>
+      <div className="app-container dark-theme">
+        <div className="navbar">
+          <Link to="/"> Dashboard</Link>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <Link to="/auth"> Sign In</Link>
+          </SignedOut>
+        </div>
         <Routes>
-          <Route path="/" element={<h1>This is the Home Page</h1>}></Route>
-          <Route path="/auth" element={<Auth />}></Route>
-          <Route path="/dashboard" element={
-            <FinancialRecordsProvider>
-              <Dashboard />
-            </FinancialRecordsProvider>
-          }></Route>
+          <Route
+            path="/"
+            element={
+              <FinancialRecordsProvider>
+                <Dashboard />
+              </FinancialRecordsProvider>
+            }
+          />
+          <Route path="/auth" element={<Auth />} />
         </Routes>
-      </Router>
-    </>
+      </div>
+    </Router>
   );
 }
 
