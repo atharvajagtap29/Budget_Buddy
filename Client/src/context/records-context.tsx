@@ -151,7 +151,7 @@ export const FinancialRecordsProvider = ({
   );
 };
 
-// Custom hook to use the FinancialRecordsContext
+// Custom hook to use the FinancialRecordsContext anywhere in the app
 export const useFinancialRecords = () => {
   const context = useContext(FinancialRecordsContext);
   if (!context) {
